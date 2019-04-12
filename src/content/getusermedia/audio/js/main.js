@@ -28,7 +28,6 @@ recordButton.addEventListener('click', () => {
   } else {
     stopRecording();
     recordButton.textContent = 'Start Recording';
-    playButton.disabled = false;
     downloadButton.disabled = false;
   }
 });
@@ -67,7 +66,6 @@ function startRecording() {
 
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
   recordButton.textContent = 'Stop Recording';
-  playButton.disabled = true;
   downloadButton.disabled = true;
   mediaRecorder.onstop = (event) => {
     console.log('Recorder stopped: ', event);
