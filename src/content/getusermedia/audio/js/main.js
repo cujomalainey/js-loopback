@@ -13,7 +13,9 @@ const audio = document.querySelector('audio');
 const recordButton = document.querySelector('button#record');
 const downloadButton = document.querySelector('button#download');
 
+let mediaRecorder;
 let recordedBlobs;
+let sourceBuffer;
 
 const constraints = window.constraints = {
   audio: true,
