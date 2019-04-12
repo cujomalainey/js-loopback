@@ -29,23 +29,28 @@ recordButton.addEventListener('click', () => {
   }
 });
 
+downloadButton.addEventListener('click', () => {
+  const blob = new Blob(recordedBlobs, {type: 'audio/webm'});
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.style.display = 'none';
+  a.href = url;
+  a.download = 'test.webm';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }, 100);
+});
+
 function startRecording() {
   recordedBlobs = [];
-  let options = {mimeType: 'video/webm;codecs=vp9'};
+  let options = {mimeType: 'audio/webm'};
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     console.error(`${options.mimeType} is not Supported`);
     errorMsgElement.innerHTML = `${options.mimeType} is not Supported`;
-    options = {mimeType: 'video/webm;codecs=vp8'};
-    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-      console.error(`${options.mimeType} is not Supported`);
-      errorMsgElement.innerHTML = `${options.mimeType} is not Supported`;
-      options = {mimeType: 'video/webm'};
-      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-        console.error(`${options.mimeType} is not Supported`);
-        errorMsgElement.innerHTML = `${options.mimeType} is not Supported`;
-        options = {mimeType: ''};
-      }
-    }
+    options = {mimeType: ''};
   }
 
   try {
