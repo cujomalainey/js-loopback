@@ -13,6 +13,8 @@ const audio = document.querySelector('audio');
 const recordButton = document.querySelector('button#record');
 const downloadButton = document.querySelector('button#download');
 
+let recordedBlobs;
+
 const constraints = window.constraints = {
   audio: true,
   video: false
@@ -71,6 +73,12 @@ function startRecording() {
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.start(10); // collect 10ms of data
   console.log('MediaRecorder started', mediaRecorder);
+}
+
+function handleDataAvailable(event) {
+  if (event.data && event.data.size > 0) {
+    recordedBlobs.push(event.data);
+  }
 }
 
 function stopRecording() {
